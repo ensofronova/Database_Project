@@ -45,9 +45,7 @@ class DataBase:
         )
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
-        print(f"Dropping database: {self.name}")
         self.cursor.execute(f"DROP DATABASE IF EXISTS {self.name};")
-        print("Database dropped successfully")
         self.connection.close()
         self.cursor.close()
 
@@ -72,9 +70,6 @@ class DataBase:
         self.cursor.callproc("search_owner", (email,))
         return self.cursor.fetchone()[0]
 
-    def update_owner(self, new_name, previous_name):
-        self.cursor.callproc("update_owner", (new_name, previous_name,))
-
     # -------------------------------------------------------------
 
     # Suppliers ---------------------------------------------------------
@@ -94,9 +89,6 @@ class DataBase:
     def search_supplier(self, phone_number):
         self.cursor.callproc("search_supplier", (phone_number,))
         return self.cursor.fetchone()[0]
-
-    def update_supplier(self, new_name, previous_name):
-        self.cursor.callproc("update_supplier", (new_name, previous_name,))
 
     # -------------------------------------------------------------
 
@@ -118,8 +110,6 @@ class DataBase:
     def delete_rating(self, name):
         self.cursor.callproc("delete_rating", (name,))
 
-    def update_ratings(self, new_name, previous_name):
-        self.cursor.callproc("update_ratings", (new_name, previous_name,))
     # -------------------------------------------------------------
 
     # Business ---------------------------------------------------------
@@ -139,6 +129,3 @@ class DataBase:
 
     def delete_businesses(self):
         self.cursor.callproc("delete_businesses")
-
-    def update_business(self, new_name, previous_name):
-        self.cursor.callproc("update_business", (new_name, previous_name,))

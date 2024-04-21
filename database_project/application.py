@@ -44,7 +44,6 @@ class MainWindow(QtWidgets.QMainWindow, userInterface.Ui_MainWindow):
         self.deleteOwnersButton.clicked.connect(self.delete_owner)
         self.searchOwnersButton.clicked.connect(self.search_owner)
         self.clearOwnersButton.clicked.connect(self.delete_owners)
-        self.ownersTable.itemChanged.connect(self.update_owner)
 
         # Suppliers
         self.suppliersTable.setColumnCount(len(self.columns_suppliers))
@@ -54,7 +53,6 @@ class MainWindow(QtWidgets.QMainWindow, userInterface.Ui_MainWindow):
         self.deleteSuppliersButton.clicked.connect(self.delete_supplier)
         self.searchSuppliersButton.clicked.connect(self.search_supplier)
         self.clearSuppliersButton.clicked.connect(self.delete_suppliers)
-        self.suppliersTable.itemChanged.connect(self.update_supplier)
 
         # Ratings
         self.ratingsTable.setColumnCount(len(self.columns_ratings))
@@ -73,7 +71,6 @@ class MainWindow(QtWidgets.QMainWindow, userInterface.Ui_MainWindow):
         self.deleteButton.clicked.connect(self.delete_business)
         self.searchButton.clicked.connect(self.search_business)
         self.clearButton.clicked.connect(self.delete_businesses)
-        self.BusinessTable.itemChanged.connect(self.update_business)
 
     def connect_to_database(self, user, pswd, name, host='localhost'):
         self.db = DataBase(
@@ -159,14 +156,6 @@ class MainWindow(QtWidgets.QMainWindow, userInterface.Ui_MainWindow):
             self.business = self.db.search_business(self.businessNameText.text())
         self.set_data(self.BusinessTable, self.columns_business, self.business)
 
-    def update_business(self, item):
-        if not self.changed:
-            self.db.update_business(item.text(), self.business[item.row()]['name'])
-            self.business = self.db.get_business()
-            self.set_data(self.BusinessTable, self.columns_business, self.business)
-            self.ratings = self.db.get_ratings()
-            self.set_data(self.ratingsTable, self.columns_ratings, self.ratings)
-
     # --------------------- Owner functions -----------------------
     def add_owner(self):
         self.db.add_owner(
@@ -197,14 +186,6 @@ class MainWindow(QtWidgets.QMainWindow, userInterface.Ui_MainWindow):
         else:
             self.owners = self.db.search_owner(self.emailText.text())
         self.set_data(self.ownersTable, self.columns_owners, self.owners)
-
-    def update_owner(self, item):
-        if not self.changed:
-            self.db.update_owner(item.text(), self.owners[item.row()]['name'])
-            self.owners = self.db.get_owners()
-            self.set_data(self.ownersTable, self.columns_owners, self.owners)
-            self.business = self.db.get_business()
-            self.set_data(self.BusinessTable, self.columns_business, self.business)
 
     # --------------------- Supplier functions -----------------------
     def add_supplier(self):
@@ -238,14 +219,6 @@ class MainWindow(QtWidgets.QMainWindow, userInterface.Ui_MainWindow):
             self.suppliers = self.db.search_supplier(self.phoneNumberText.text())
         self.set_data(self.suppliersTable, self.columns_suppliers, self.suppliers)
 
-    def update_supplier(self, item):
-        if not self.changed:
-            self.db.update_supplier(item.text(), self.suppliers[item.row()]['organisation'])
-            self.suppliers = self.db.get_suppliers()
-            self.set_data(self.suppliersTable, self.columns_suppliers, self.suppliers)
-            self.business = self.db.get_business()
-            self.set_data(self.BusinessTable, self.columns_business, self.business)
-
     # --------------------- Ratings functions -----------------------
     def add_rating(self):
         self.db.add_rating(
@@ -277,9 +250,3 @@ class MainWindow(QtWidgets.QMainWindow, userInterface.Ui_MainWindow):
         else:
             self.ratings = self.db.search_ratings(self.BusinessRatingsText.text())
         self.set_data(self.ratingsTable, self.columns_ratings, self.ratings)
-
-    def update_ratings(self, item):
-        if not self.changed:
-            self.db.update_ratings(item.text(), self.ratings[item.row()]['business_name'])
-            self.ratings = self.db.get_ratings()
-            self.set_data(self.ratingsTable, self.columns_ratings, self.ratings)
