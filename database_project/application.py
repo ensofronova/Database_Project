@@ -120,7 +120,7 @@ class MainWindow(QtWidgets.QMainWindow, userInterface.Ui_MainWindow):
             table.setRowCount(0)
         self.changed = False
 
-    # ----------------- Lounge bar functions --------------------
+    # ----------------- Business functions --------------------
     def add_business(self):
         self.db.add_business(
             name=self.businessNameText.text(),
