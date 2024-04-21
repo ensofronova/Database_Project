@@ -109,6 +109,15 @@ create or replace function search_supplier(in phone_number0 varchar(11))
 		end
 	$$;
 
+create or replace function update_supplier(in new_organisation text, in organisation0 text)
+	returns void
+	language sql
+	as $$
+
+	update "Suppliers" set organisation = new_organisation where organisation = organisation0
+
+$$;
+
 /*------------------------------Owners-----------------------------*/
 
 create or replace function add_owner(in name1 text, in foundation_date date, in email text)
@@ -162,6 +171,15 @@ create or replace function search_owner(in email0 text)
 				'email', "Owners".email)) from "Owners" where email = email0);
 		end
 	$$;
+
+create or replace function update_owner(in new_name text, in name0 text)
+	returns void
+	language sql
+	as $$
+
+	update "Owners" set name = new_name where name = name0
+
+$$;
 
 /*--------------------------------------------------------------------*/
 
@@ -224,5 +242,14 @@ create or replace function search_business(in name0 text)
 				'feature', "Business".feature)) from "Business" where name = name0);
 		end
 	$$;
+
+create or replace function update_business(in new_name text, in name0 text)
+	returns void
+	language sql
+	as $$
+
+	update "Business" set name = new_name where name = name0
+
+$$;
 
 /*--------------------------------------------------------------------------*/
