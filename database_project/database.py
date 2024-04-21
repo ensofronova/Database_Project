@@ -122,7 +122,7 @@ class DataBase:
         self.cursor.callproc("update_ratings", (new_name, previous_name,))
     # -------------------------------------------------------------
 
-    # Lounge bars ---------------------------------------------------------
+    # Business ---------------------------------------------------------
     def add_business(self, name, address, supplier, owner, feature):
         self.cursor.callproc("add_business", (name, address, supplier, owner, feature,))
 
