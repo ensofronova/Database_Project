@@ -65,7 +65,7 @@ class MainWindow(QtWidgets.QMainWindow, userInterface.Ui_MainWindow):
         self.deleteRatingsButton.clicked.connect(self.delete_rating)
         self.clearRatingsButton.clicked.connect(self.delete_ratings)
 
-        # Lounge bars
+        # Business
         self.BusinessTable.setColumnCount(len(self.columns_business))
         self.BusinessTable.setHorizontalHeaderLabels(self.columns_business)
         self.BusinessTable.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
